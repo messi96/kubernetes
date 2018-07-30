@@ -1,0 +1,124 @@
+Setting up Kubernetes cluster
+
+Kubectl installed : just google 
+Minikube installed : https://github.com/kubernetes/minikube/releases (dpkg -i)
+
+	$minikube start     ::: starts a local kubernetes cluster (single node kube cluster)
+		// --vm-driver flag can be given, it defaults to virtualbox .. so no need in our case
+	$kubectl config current-context   : 
+
+	sh:~/Downloads# 
+	sh:~/Downloads# kubectl config current-context
+	minikube
+	sh:~/Downloads# kubectl get nodes
+	NAME       STATUS    ROLES     AGE       VERSION
+	minikube   Ready     master    7m        v1.10.0
+
+
+	sh:~/Downloads# minikube stop 
+	Stopping local Kubernetes cluster...
+	Machine stopped.
+	sh:~/Downloads# minikube delete
+	Deleting local Kubernetes cluster...
+	Machine deleted.
+
+
+	sh:~/Downloads# minikube dashboard
+	Opening kubernetes dashboard in default browser...
+
+pops up a pretty cool UI like a cluster UI to manage nodes and list everything.. kind of orchestrator
+
+
+
+service : kubectl expose rc hello-rc --name=hello-svc  --target-port=8080 --type=NodePort
+
+
+		sh:~/kubernetes# kubectl get ep
+		NAME         ENDPOINTS                         AGE
+		hello-svc    172.17.0.4:8080,172.17.0.5:8080   1m
+		kubernetes   192.168.99.100:8443               1h
+		sh:~/kubernetes# kubectl describe ep hello-svc
+		Name:         hello-svc
+		Namespace:    default
+		Labels:       app=hello-world
+		Annotations:  <none>
+		Subsets:
+		  Addresses:          172.17.0.4,172.17.0.5
+		  NotReadyAddresses:  <none>
+		  Ports:
+		    Name     Port  Protocol
+		    ----     ----  --------
+		    <unset>  8080  TCP
+
+		Events:  <none>
+
+
+
+
+Deployments.... nicee!
+
+
+
+  496  kubectl config current-context
+  497  kubectl get nodes
+  498  touch pod.yml
+  499  kubectl create -f pod.yml 
+  500  kubectl get pod
+  501  kubectl describe pods
+  502  kubectl get pods
+  503  kubectl get pods/hello-pod
+  504  kubectl get pods --all-namespaces
+  505  kubectl get pods 
+  506  kubectl delete hello-pod
+  507  kubectl delete pods hello-pod
+  508  touch rc.yml
+  509  kubectl create -f rc.yml 
+  510  kubectl get rc
+  511  kubectl describe rc
+  512  kubectl get rc -o wide
+  513  kubectl get pods
+  514  kubectl get pods 
+  515  kubectl describe pods
+  516  kubectl expose rc hello-rc --name=hello-svc  --target-port=8080 --type=NodePort
+  517  kubectl describe svc hello-svc
+  518  kubectl get pods
+  519  kubectl get services
+  520  kubectl get nodes
+  521  kubectl describe nodes
+  522  kubectl get services
+  523  kubectl delete svc hello-svc
+  524  touch svc.yml
+  525  kubectl describe pods | grep app
+  526  cat svc.yml 
+  527  kubectl create -f svc.yml 
+  528  kubectl get services
+  529  kubectl describe svc hello-svc
+  530  kubectl get ep
+  531  kubectl describe ep hello-svc
+  532  touch deployment.yml
+  533  kubectl delete rc hello-rc
+  534  kubectl get pods
+  535  kubectl describe svc  hello-svc
+  536  kubectl create -f deployment.yml 
+  537  kubectl describe hello-deploy
+  538  kubectl describe deploy hello-deploy
+  539  kubectl get rs
+  540  touch deploy.yml
+  541  kubectl apply -f deploy.yml --recoed
+  542  kubectl apply -f deploy.yml --record
+  543  kubectl get deployments
+  544  kubectl stop deployments
+  545* kubectl remove 
+  546  ubectl delete deployment hello-deploy
+  547  kubectl delete deployment hello-deploy
+  548  kubectl apply -f deploy.yml --record
+  549  kubectl rollout status
+  550  kubectl rollout status deployment hello-deploy
+  551  kubectl get deploy hello-deploy
+  552  kubectl rollout history deployment hello-deploy
+  553  kubectl get rs
+  554  kubectl rollout undo deployment hello-deploy --to-revision=1
+  555  kubectl get deployt
+  556  kubectl get deploy
+  557  kubectl rollout status
+  558  history 
