@@ -14,3 +14,9 @@ spec:
         image: yeasy/simple-web:latest
         ports:
         - containerPort: 80
+        livenessProbe:				#healthcheck
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          timeoutSeconds: 30
