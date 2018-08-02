@@ -127,13 +127,13 @@ now deployment.. that is same as rc.. just it creates replica set.. so still to 
 
 secrets ::
 
-	root@pwned:~/kubernetes/kubernetes/simple_web_app# kubectl get pods
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl get pods
 	NAME                            READY     STATUS    RESTARTS   AGE
 	hello-deploy-7b5bd9cbd6-7bnmc   1/1       Running   0          56s
 	hello-deploy-7b5bd9cbd6-vgltl   1/1       Running   0          56s
 	hello-deploy-7b5bd9cbd6-xk5f4   1/1       Running   0          56s
 	hello-deploy-7b5bd9cbd6-z2t4d   1/1       Running   0          56s
-	root@pwned:~/kubernetes/kubernetes/simple_web_app# kubectl exec -it hello-deploy-7b5bd9cbd6-7bnmc /bin/bash
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl exec -it hello-deploy-7b5bd9cbd6-7bnmc /bin/bash
 	root@hello-deploy-7b5bd9cbd6-7bnmc:/code# ls -al
 	total 40
 	drwxr-xr-x 1 root root 4096 Aug  2 20:17 .

@@ -34,8 +34,8 @@ spec:
         volumeMounts:										#using secret with volumes
         - name: credvolume
           mountPath: /etc/creds					#secrets mounted at this path inside the container or pod
-          readOnly: true
-      volumes:
+          readOnly: true			
+      volumes:							#volume definition .. creating of it 
       - name: credvolume
         secret:
           secretName: db-secret  
