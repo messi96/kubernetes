@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ReplicationController
+metadata: 
+  name: hello-web-rc
+  labels:
+    env: dev
+spec:
+  replicas: 2
+  selector:
+    app: hello-web
+  template:
+    metadata:
+      labels:
+        app: hello-web
+    spec: 
+      containers:
+      - name: hello-container
+        image: yeasy/simple-web:latest
+        ports:
+        - containerPort: 80

@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment				#pretty much same like ReplicationController
+metadata:
+  name: hello-deploy
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: hello-web				#labels for pods.. this should be same in services
+    spec:
+      containers:
+      - name: hello-container
+        image: yeasy/simple-web:latest
+        ports:
+        - containerPort: 80

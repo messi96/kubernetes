@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-web
+  labels:
+    env: dev
+    version: v1
+spec:
+  containers: 
+  - name: hello-server 
+    image: yeasy/simple-web:latest
+    ports:
+    - containerPort: 80

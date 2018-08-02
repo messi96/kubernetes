@@ -1,0 +1,125 @@
+exec inside a pod
+
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl get pods
+	NAME                 READY     STATUS    RESTARTS   AGE
+	hello-web-rc-rqsmf   1/1       Running   0          13m
+	hello-web-rc-w9bfr   1/1       Running   0          13m
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl get svc
+	NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+	hello-svc    NodePort    10.109.130.40   <none>        80:30001/TCP   5m
+	kubernetes   ClusterIP   10.96.0.1       <none>        443/TCP        53m
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl exec hello-web-rc-rqsmf -c hello-container --tty -- /bin/sh
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl exec hello-web-rc-rqsmf -c hello-container /bin/bash
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl exec hello-web-rc-rqsmf 
+	error: expected 'exec POD_NAME COMMAND [ARG1] [ARG2] ... [ARGN]'.
+	POD_NAME and COMMAND are required arguments for the exec command
+	See 'kubectl exec -h' for help and examples.
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl exec hello-web-rc-rqsmf env
+	PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+	HOSTNAME=hello-web-rc-rqsmf
+	KUBERNETES_PORT_443_TCP_ADDR=10.96.0.1
+	KUBERNETES_SERVICE_HOST=10.96.0.1
+	KUBERNETES_SERVICE_PORT=443
+	KUBERNETES_SERVICE_PORT_HTTPS=443
+	KUBERNETES_PORT=tcp://10.96.0.1:443
+	KUBERNETES_PORT_443_TCP=tcp://10.96.0.1:443
+	KUBERNETES_PORT_443_TCP_PROTO=tcp
+	KUBERNETES_PORT_443_TCP_PORT=443
+	LANG=C.UTF-8
+	GPG_KEY=C01E1CAD5EA2C4F0B8E3571504C367C218ADD4FF
+	PYTHON_VERSION=2.7.14
+	PYTHON_PIP_VERSION=10.0.1
+	HOME=/root
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl exec -it hello-web-rc-rqsmf -- bash
+	root@hello-web-rc-rqsmf:/code# ls -al
+	total 40
+	drwxr-xr-x 1 root root 4096 Aug  2 15:55 .
+	drwxr-xr-x 1 root root 4096 Aug  2 15:46 ..
+	drwxr-xr-x 8 root root 4096 Apr 21 14:37 .git
+	-rw-r--r-- 1 root root  353 Apr 21 14:37 .gitignore
+	-rw-r--r-- 1 root root  101 Apr 21 14:37 Dockerfile
+	-rw-r--r-- 1 root root 2237 Apr 21 14:37 README.md
+	-rw-r--r-- 1 root root  352 Aug  2 15:56 index.html
+	-rw-r--r-- 1 root root 2928 Apr 21 14:37 index.py
+	-rw-r--r-- 1 root root  127 Aug  2 15:56 pickle_data.txt
+	root@hello-web-rc-rqsmf:/code# cat pickle_data.txt 
+	ccollections
+	OrderedDict
+	p0
+	((lp1
+	(lp2
+	(S'172.17.0.1'
+	p3
+	S'172.17.0.5'
+	p4
+	tp5
+	a(lp6
+	I14
+	aS'2018-08-02 15:56:00'
+	p7
+	aaatp8
+	Rp9
+	.root@hello-web-rc-rqsmf:/code# uname -a
+	Linux hello-web-rc-rqsmf 4.15.0 #1 SMP Mon Jul 16 20:23:29 UTC 2018 x86_64 GNU/Linux
+	root@hello-web-rc-rqsmf:/code# df -h *
+	Filesystem      Size  Used Avail Use% Mounted on
+	overlay          17G  2.0G   14G  13% /
+	overlay          17G  2.0G   14G  13% /
+	overlay          17G  2.0G   14G  13% /
+	overlay          17G  2.0G   14G  13% /
+	overlay          17G  2.0G   14G  13% /
+	root@hello-web-rc-rqsmf:/code# ls -a
+	.   .git	Dockerfile  index.html	pickle_data.txt
+	..  .gitignore	README.md   index.py
+	root@hello-web-rc-rqsmf:/code# ls -al
+	total 40
+	drwxr-xr-x 1 root root 4096 Aug  2 15:55 .
+	drwxr-xr-x 1 root root 4096 Aug  2 15:46 ..
+	drwxr-xr-x 8 root root 4096 Apr 21 14:37 .git
+	-rw-r--r-- 1 root root  353 Apr 21 14:37 .gitignore
+	-rw-r--r-- 1 root root  101 Apr 21 14:37 Dockerfile
+	-rw-r--r-- 1 root root 2237 Apr 21 14:37 README.md
+	-rw-r--r-- 1 root root  352 Aug  2 15:56 index.html
+	-rw-r--r-- 1 root root 2928 Apr 21 14:37 index.py
+	-rw-r--r-- 1 root root  127 Aug  2 15:56 pickle_data.txt
+	root@hello-web-rc-rqsmf:/code# ping google.com
+	PING google.com (172.217.163.206): 56 data bytes
+	64 bytes from 172.217.163.206: icmp_seq=0 ttl=61 time=14.947 ms
+	64 bytes from 172.217.163.206: icmp_seq=1 ttl=61 time=17.661 ms
+	^C--- google.com ping statistics ---
+	2 packets transmitted, 2 packets received, 0% packet loss
+	round-trip min/avg/max/stddev = 14.947/16.304/17.661/1.357 ms
+	root@hello-web-rc-rqsmf:/code# ^C
+	root@hello-web-rc-rqsmf:/code# 
+
+
+To get inside a specific container of a pod
+
+	sh:~/kubernetes/kubernetes/simple_web_app# kubectl exec -it hello-web-rc-rqsmf -c hello-container /bin/bash
+	root@hello-web-rc-rqsmf:/code# ls -al
+	total 40
+	drwxr-xr-x 1 root root 4096 Aug  2 15:55 .
+	drwxr-xr-x 1 root root 4096 Aug  2 15:46 ..
+	drwxr-xr-x 8 root root 4096 Apr 21 14:37 .git
+	-rw-r--r-- 1 root root  353 Apr 21 14:37 .gitignore
+	-rw-r--r-- 1 root root  101 Apr 21 14:37 Dockerfile
+	-rw-r--r-- 1 root root 2237 Apr 21 14:37 README.md
+	-rw-r--r-- 1 root root  352 Aug  2 15:56 index.html
+	-rw-r--r-- 1 root root 2928 Apr 21 14:37 index.py
+	-rw-r--r-- 1 root root  127 Aug  2 15:56 pickle_data.txt
+	root@hello-web-rc-rqsmf:/code# pwd
+	/code
+	root@hello-web-rc-rqsmf:/code# uname -a
+	Linux hello-web-rc-rqsmf 4.15.0 #1 SMP Mon 
+
+	root@hello-web-rc-rqsmf:/code# ^C
+	root@hello-web-rc-rqsmf:/code# ^C
+	root@hello-web-rc-rqsmf:/code# ps -aux
+	USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+	root         1  0.0  0.0   4340   756 ?        Ss   15:46   0:00 /bin/sh -c python index.py
+	root         5  0.0  0.6  89124 13552 ?        S    15:46   0:00 python index.py
+	root        42  0.0  0.1  21956  3588 pts/0    Ss   16:05   0:00 /bin/bash
+	root        50  0.0  0.1  19192  2392 pts/0    R+   16:07   0:00 ps -aux
+	root@hello-web-rc-rqsmf:/code# exit
+
+now deployment.. that is same as rc.. just it creates replica set.. so still to expose you'll need to deploy a service object in front of it.. same like rc :)
