@@ -123,3 +123,71 @@ To get inside a specific container of a pod
 	root@hello-web-rc-rqsmf:/code# exit
 
 now deployment.. that is same as rc.. just it creates replica set.. so still to expose you'll need to deploy a service object in front of it.. same like rc :)
+
+
+secrets ::
+
+	root@pwned:~/kubernetes/kubernetes/simple_web_app# kubectl get pods
+	NAME                            READY     STATUS    RESTARTS   AGE
+	hello-deploy-7b5bd9cbd6-7bnmc   1/1       Running   0          56s
+	hello-deploy-7b5bd9cbd6-vgltl   1/1       Running   0          56s
+	hello-deploy-7b5bd9cbd6-xk5f4   1/1       Running   0          56s
+	hello-deploy-7b5bd9cbd6-z2t4d   1/1       Running   0          56s
+	root@pwned:~/kubernetes/kubernetes/simple_web_app# kubectl exec -it hello-deploy-7b5bd9cbd6-7bnmc /bin/bash
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/code# ls -al
+	total 40
+	drwxr-xr-x 1 root root 4096 Aug  2 20:17 .
+	drwxr-xr-x 1 root root 4096 Aug  2 20:17 ..
+	drwxr-xr-x 8 root root 4096 Apr 21 14:37 .git
+	-rw-r--r-- 1 root root  353 Apr 21 14:37 .gitignore
+	-rw-r--r-- 1 root root  101 Apr 21 14:37 Dockerfile
+	-rw-r--r-- 1 root root 2237 Apr 21 14:37 README.md
+	-rw-r--r-- 1 root root  346 Aug  2 20:17 index.html
+	-rw-r--r-- 1 root root 2928 Apr 21 14:37 index.py
+	-rw-r--r-- 1 root root  121 Aug  2 20:17 pickle_data.txt
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/code# pwd
+	/code
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/code# cd /etc
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/etc# ls
+	ImageMagick-6		group		login.defs	perl	     shells
+	X11			group-		logrotate.d	profile      skel
+	adduser.conf		gshadow		machine-id	profile.d    ssh
+	alternatives		gshadow-	magic		protocols    ssl
+	apt			gss		magic.mime	python	     staff-group-for-usr-local
+	bash.bashrc		host.conf	mailcap		python2.7    subgid
+	bash_completion.d	hostname	mailcap.order	rc.local     subgid-
+	bindresvport.blacklist	hosts		mercurial	rc0.d	     subuid
+	binfmt.d		init		mime.types	rc1.d	     subuid-
+	ca-certificates		init.d		mke2fs.conf	rc2.d	     subversion
+	ca-certificates.conf	inputrc		modprobe.d	rc3.d	     sysctl.conf
+	creds			insserv		modules-load.d	rc4.d	     sysctl.d
+	cron.daily		insserv.conf	motd		rc5.d	     systemd
+	dbus-1			insserv.conf.d	mtab		rc6.d	     terminfo
+	debconf.conf		iproute2	mysql		rcS.d	     timezone
+	debian_version		issue		network		resolv.conf  tmpfiles.d
+	default			issue.net	networks	rmt	     ucf.conf
+	deluser.conf		kernel		nsswitch.conf	rpc	     udev
+	dpkg			ld.so.cache	opt		securetty    wgetrc
+	emacs			ld.so.conf	os-release	security     xdg
+	environment		ld.so.conf.d	pam.conf	selinux
+	fonts			ldap		pam.d		services
+	fstab			libaudit.conf	passwd		shadow
+	gai.conf		localtime	passwd-		shadow-
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/etc# cd creds
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/etc/creds# ls
+	password  username
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/etc/creds# ls -al
+	total 4
+	drwxrwxrwt 3 root root  120 Aug  2 20:16 .
+	drwxr-xr-x 1 root root 4096 Aug  2 20:17 ..
+	drwxr-xr-x 2 root root   80 Aug  2 20:16 ..2018_08_02_20_16_36.497129902
+	lrwxrwxrwx 1 root root   31 Aug  2 20:16 ..data -> ..2018_08_02_20_16_36.497129902
+	lrwxrwxrwx 1 root root   15 Aug  2 20:16 password -> ..data/password
+	lrwxrwxrwx 1 root root   15 Aug  2 20:16 username -> ..data/username
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/etc/creds# cat password 
+	mypassword
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/etc/creds# cat username 
+	root
+	root@hello-deploy-7b5bd9cbd6-7bnmc:/etc/creds# 
+
+

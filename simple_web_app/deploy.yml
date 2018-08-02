@@ -20,3 +20,24 @@ spec:
             port: 80
           initialDelaySeconds: 15
           timeoutSeconds: 30
+        # env:														#using secret via env
+        # 	- name: SECRET_USERNAME
+        # 	  valueFrom:
+        # 	  	secretKeyRef:
+        # 	  		name: db-secret					#name of the secret created with secret.yml file
+        # 	  		key: username
+        # 	- name: SECRET_PASSWORD
+        # 	  valueFrom:
+        # 	  	secretKeyRef:
+        # 	  		name: db-secret
+        # 	  		key: password
+        volumeMounts:										#using secret with volumes
+        - name: credvolume
+          mountPath: /etc/creds					#secrets mounted at this path inside the container or pod
+          readOnly: true
+      volumes:
+      - name: credvolume
+        secret:
+          secretName: db-secret  
+
+
