@@ -5,7 +5,7 @@ metadata:
   labels:
     app: hello-web-svc          #just a service label
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80			#port in container
     nodePort: 30003
