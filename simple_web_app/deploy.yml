@@ -3,7 +3,7 @@ kind: Deployment				#pretty much same like ReplicationController
 metadata:
   name: hello-deploy
 spec:
-  replicas: 4
+  replicas: 1
   template:
     metadata:
       labels:
